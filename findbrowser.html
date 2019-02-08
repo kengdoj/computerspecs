@@ -1,39 +1,159 @@
 <!DOCTYPE html>
-<head>
-    <title="find browser">
-</head>
+    <html>
+	<head><title>My Computer</title></head>
     <body>
-    <p>What is the name(s) of your browser?</p>
-    <button onclick="myFunction()">Try it</button>
-    <p id="demo"></p>
-    <script>
+    <p>What are your computer properties?</p>
+    <!--<button onclick="myFunction()">Find Browser</button>-->
+    <p id="os"></p>
+	<p> Your browser: <span id="browsername"></span> <span id="browserversion"></span></p>
+	<p id="ipaddy"></p>
+	<p id="java"></p>
+	<p>Javascript: <span id="json">disabled</span></p>
+	<p>Cookies:  <span id="cookies">disabled</span></p>
+	<p id="res_color"></p>
+	<p>Web browser Size: <span id="browser_size"></p>
+	<p id="bunches"></p>
+<script>
+//javascript enabled check
+document.getElementById("json").innerHTML="enabled"; 
+//javascript must be enabled for this to work
+</script>
+<script>
+//cookies check
+var x = navigator.cookieEnabled;
+if (x=true){document.getElementById("cookies").innerHTML="enabled";}
+</script>
+<script>
+//screen resolution and color depth
+var txt = "";
+txt += "<p>Screen Resolution: " + screen.width + " x " + screen.height + "</p>";
+txt += "<p>Color depth: " + screen.colorDepth + "</p>";
+document.getElementById("res_color").innerHTML = txt;
+</script>
+<script>
+//browser size
+var w = window.innerWidth;
+  var h = window.innerHeight;
+  document.getElementById("browser_size").innerHTML =  w + " x " + h;
+</script>
+<script>
+//IP address
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.js"></script>
+  <script type="text/javascript">
+    //var getIPAddress = function() {
+      $.getJSON("https://jsonip.com?callback=?", function(data) {
+        document.getElementById("ipaddy").innerHTML= ("Your IP address is : " + data.ip);
+      });
+  //  };
+  </script>
 
-    function myFunction() { 
+    <script>
+	//browser check
+	var browser;
      if((navigator.userAgent.indexOf("Opera") || navigator.userAgent.indexOf('OPR')) != -1 ) 
     {
-        alert('Opera');
+        browser = 'Opera';
+    }
+	else if((navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true )) //IF IE > 10
+    {
+      browser = 'IE'; 
+    }
+	else if((navigator.userAgent.indexOf("Edge") != -1 ) || (!!document.documentMode == true )) //IF IE > 10
+    {
+      browser = 'Edge'; 
     }
     else if(navigator.userAgent.indexOf("Chrome") != -1 )
     {
-        alert('Chrome');
+        browser = 'Chrome';
     }
     else if(navigator.userAgent.indexOf("Safari") != -1)
     {
-        alert('Safari');
+        browser = 'Safari';
     }
     else if(navigator.userAgent.indexOf("Firefox") != -1 ) 
     {
-         alert('Firefox');
+         browser = 'Firefox';
     }
-    else if((navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true )) //IF IE > 10
-    {
-      alert('IE'); 
-    }  
     else 
     {
-       alert('unknown');
+       browser = 'unknown';
     }
-    }
+	document.getElementById("browsername").innerHTML=(browser);
+    //}
     </script>
-</body>
-</html>
+<script>
+// This script sets OSName variable as follows:
+// "Windows"    for all versions of Windows
+// "MacOS"      for all versions of Macintosh OS
+// "Linux"      for all versions of Linux
+// "UNIX"       for all other UNIX flavors 
+// "Unknown OS" indicates failure to detect the OS
+
+var OSName="Unknown OS";
+if (navigator.appVersion.indexOf("Win")!=-1) OSName="Windows";
+if (navigator.appVersion.indexOf("Mac")!=-1) OSName="MacOS";
+if (navigator.appVersion.indexOf("X11")!=-1) OSName="UNIX";
+if (navigator.appVersion.indexOf("Linux")!=-1) OSName="Linux";
+
+document.getElementById("os").innerHTML=('Your OS: '+OSName);
+</script>
+<script>
+var x = "Java Enabled: " + navigator.javaEnabled();
+  document.getElementById("java").innerHTML = x;
+  </script>
+
+<Script Language="JavaScript"> 
+var objappVersion = navigator.appVersion; 
+var objAgent = navigator.userAgent; 
+var objbrowserName = navigator.appName; 
+var objfullVersion = ''+parseFloat(navigator.appVersion); 
+var objBrMajorVersion = parseInt(navigator.appVersion,10); 
+var objOffsetName,objOffsetVersion,ix; 
+// In Chrome 
+if ((objOffsetVersion=objAgent.indexOf("Chrome"))!=-1) { 
+objbrowserName = "Chrome"; 
+objfullVersion = objAgent.substring(objOffsetVersion+7); 
+} 
+// In Microsoft internet explorer 
+else if ((objOffsetVersion=objAgent.indexOf("MSIE"))!=-1) { 
+objbrowserName = "Microsoft Internet Explorer"; 
+objfullVersion = objAgent.substring(objOffsetVersion+5); 
+} 
+// In Firefox 
+else if ((objOffsetVersion=objAgent.indexOf("Firefox"))!=-1) { 
+objbrowserName = "Firefox"; 
+} 
+// In Safari 
+else if ((objOffsetVersion=objAgent.indexOf("Safari"))!=-1) { 
+objbrowserName = "Safari"; 
+objfullVersion = objAgent.substring(objOffsetVersion+7); 
+if ((objOffsetVersion=objAgent.indexOf("Version"))!=-1) objfullVersion = objAgent.substring(objOffsetVersion+8); } 
+// For other browser "name/version" is at the end of userAgent 
+else if ( (objOffsetName=objAgent.lastIndexOf(' ')+1) < (objOffsetVersion=objAgent.lastIndexOf('/')) ) {
+ objbrowserName = objAgent.substring(objOffsetName,objOffsetVersion); 
+objfullVersion = objAgent.substring(objOffsetVersion+1); 
+if (objbrowserName.toLowerCase()==objbrowserName.toUpperCase()) { 
+objbrowserName = navigator.appName; 
+} 
+} 
+// trimming the fullVersion string at semicolon/space if present 
+if ((ix=objfullVersion.indexOf(";"))!=-1) 
+objfullVersion=objfullVersion.substring(0,ix); 
+if ((ix=objfullVersion.indexOf(" "))!=-1) 
+objfullVersion=objfullVersion.substring(0,ix); 
+
+objBrMajorVersion = parseInt(''+objfullVersion,10); 
+if (isNaN(objBrMajorVersion)) { 
+objfullVersion = ''+parseFloat(navigator.appVersion); 
+objBrMajorVersion = parseInt(navigator.appVersion,10); 
+} 
+//document.getElementById("browsername").innerHTML= (objbrowserName);
+document.getElementById("browserversion").innerHTML= (objfullVersion);
+document.getElementById("bunches").innerHTML =('Browser name = '+objbrowserName+'<br>' +'Full version = '+objfullVersion+'<br>' +'Major version = '+objBrMajorVersion+'<br>' +'navigator.appName = '+navigator.appName+'<br>' +'navigator.userAgent = '+navigator.userAgent+'<br>'+'navigator.appVersion = '+navigator.appVersion+'<br>' ) 
+ 
+ </script>
+
+
+
+    </body>
+    </html>
